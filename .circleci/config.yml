@@ -94,5 +94,5 @@ version: 2.1
 workflows:
   Hello Workflow:
     jobs:
-      - hello-build/hello-build
+      - hello-build/hello-build:
           to: "yo bro"
