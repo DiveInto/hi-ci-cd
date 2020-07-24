@@ -31,75 +31,75 @@
 
 
 
-# version: 2.1
-# orbs:
-#     hello-build: circleci/hello-build@0.0.14
-# # orbs:
-# #   hello-orb:  kalmhq-ns1/hello-orb@dev:0.0.1
-# #   hello-build: circleci/hello-build@0.0.14
-# jobs: # we now have TWO jobs, so that a workflow can coordinate them!
-#   one: # This is our first job.
-#     docker: # it uses the docker executor
-#       - image: circleci/ruby:2.4.1 # specifically, a docker image with ruby 2.4.1
-#     # Steps are a list of commands to run inside the docker container above.
-#     steps:
-#       - checkout # this pulls code down from GitHub
-#       - run: echo "A first hello" # This prints "A first hello" to stdout.
-#       - run: sleep 2 # a command telling the job to "sleep" for 25 seconds.
-#   two: # This is our second job.
-#     docker: # it runs inside a docker image, the same as above.
-#       - image: circleci/ruby:2.4.1
-#     steps:
-#       - checkout
-#       - run: echo "A more familiar hi" # We run a similar echo command to above.
-#       - run: sleep 1 # and then sleep for 15 seconds.
-#   three:
-#     environment:
-#       IMG_NAME: tmp-img
-#     docker:
-#       - image: circleci/buildpack-deps:stretch
-#     steps:
-#       - checkout
-#       - setup_remote_docker
-#       - run:
-#           name: Build Docker image
-#           command: |
-#             docker build -t $IMG_NAME:latest .
-#             IMG_ID=$(docker images $IMG_NAME -q | head -n 1)
-#             echo $IMG_ID
-#             echo "export IMG_ID=${IMG_ID}" >> $BASH_ENV
-#       - run:
-#           name: other step in job, check if env still persist
-#           command: echo $IMG_ID
-#   job-using-orb:
-#     docker: 
-#       - image: circleci/golang:1.13.11
-#     steps:
-#       - hello-build/hello-build:
-#           to: foobar
-
-# # Under the workflows: map, we can coordinate our two jobs, defined above.
-# workflows:
-#   myworkflow: # this is the name of our workflow
-#     jobs: # and here we list the jobs we are going to run.
-#       - one
-#       - two
-#       - three
-#       - job-using-orb
-
-orbs:
-  hello-build1: circleci/hello-build@0.0.14
 version: 2.1
-jobs:
-  myjob:
+orbs:
+  hello-orb:  kalmhq-ns1/hello-orb@dev:0.0.1
+  hello-build: circleci/hello-build@0.0.14
+jobs: # we now have TWO jobs, so that a workflow can coordinate them!
+  one: # This is our first job.
+    docker: # it uses the docker executor
+      - image: circleci/ruby:2.4.1 # specifically, a docker image with ruby 2.4.1
+    # Steps are a list of commands to run inside the docker container above.
+    steps:
+      - checkout # this pulls code down from GitHub
+      - run: echo "A first hello" # This prints "A first hello" to stdout.
+      - run: sleep 2 # a command telling the job to "sleep" for 25 seconds.
+  two: # This is our second job.
+    docker: # it runs inside a docker image, the same as above.
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout
+      - run: echo "A more familiar hi" # We run a similar echo command to above.
+      - run: sleep 1 # and then sleep for 15 seconds.
+  three:
+    environment:
+      IMG_NAME: tmp-img
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t $IMG_NAME:latest .
+            IMG_ID=$(docker images $IMG_NAME -q | head -n 1)
+            echo $IMG_ID
+            echo "export IMG_ID=${IMG_ID}" >> $BASH_ENV
+      - run:
+          name: other step in job, check if env still persist
+          command: echo $IMG_ID
+  job-using-orb:
     docker: 
       - image: circleci/golang:1.13.11
     steps:
-      - hello-build1/circleci-env-highlights
+      - hello-build/hello-triggerer:
+          to: foobar
+
+# Under the workflows: map, we can coordinate our two jobs, defined above.
 workflows:
-  Hello Workflow:
-    jobs:
-      - myjob
+  myworkflow: # this is the name of our workflow
+    jobs: # and here we list the jobs we are going to run.
+      - one
+      - two
+      - three
+      - job-using-orb
+      - hello-orb/run1:
+          param1: this-is-my-p1
+
+# orbs:
+#   hello-build1: circleci/hello-build@0.0.14
+# version: 2.1
+# jobs:
+#   myjob:
+#     docker: 
+#       - image: circleci/golang:1.13.11
+#     steps:
+#       - hello-build1/circleci-env-highlights
+# workflows:
+#   Hello Workflow:
+#     jobs:
+#       - myjob
 
 # orbs:
 #   hello-build: circleci/hello-build@0.0.14
