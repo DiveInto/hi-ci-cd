@@ -28,6 +28,8 @@
 #       - run: npm run test
 
 version: 2.1
+orbs:
+  hello-orb: kalmhq-ns1/hello-orb
 jobs: # we now have TWO jobs, so that a workflow can coordinate them!
   one: # This is our first job.
     docker: # it uses the docker executor
@@ -62,6 +64,11 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
       - run:
           name: other step in job, check if env still persist
           command: echo $IMG_ID
+  job-using-orb:
+    steps:
+      - hello-orb/run:
+          param1: this-is-my-param1
+
 # Under the workflows: map, we can coordinate our two jobs, defined above.
 workflows:
   version: 2
@@ -70,3 +77,4 @@ workflows:
       - one
       - two
       - three
+      - job-using-orb
