@@ -46,6 +46,7 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
       - run: sleep 5 # and then sleep for 15 seconds.
   three:
     environment:
+      IMG_NAME: tmp-img
       IMG_ID: latest
     docker:
       - image: circleci/buildpack-deps:stretch
@@ -55,8 +56,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
       - run:
           name: Build Docker image
           command: |
-            docker build -t $IMAGE_NAME:latest .
-            IMG_ID=$(docker images $IMAGE_NAME -q | head -n 1)
+            docker build -t $IMG_NAME:latest .
+            IMG_ID=$(docker images $IMG_NAME -q | head -n 1)
       - run:
           name: other step in job, check if env still persist
           command: echo $IMG_ID
