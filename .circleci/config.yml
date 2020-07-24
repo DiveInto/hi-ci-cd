@@ -96,12 +96,11 @@ jobs:
       - image: circleci/golang:1.13.11
     steps:
       - hello-build/hello-build:
-          to: "yo bro"
+          to: "yoo bro"
 workflows:
   Hello Workflow:
     jobs:
-      - hello-build/hello-build:
-          to: "yo bro"
+      - myjob
 
 # orbs:
 #   hello-build: circleci/hello-build@0.0.14
