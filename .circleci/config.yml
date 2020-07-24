@@ -95,4 +95,4 @@ workflows:
   Hello Workflow:
     jobs:
       - hello-build/hello-build
-          to: yo bro
+          to: "yo bro"
