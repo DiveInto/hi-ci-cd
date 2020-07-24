@@ -47,7 +47,6 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
   three:
     environment:
       IMG_NAME: tmp-img
-      IMG_ID: latest
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
