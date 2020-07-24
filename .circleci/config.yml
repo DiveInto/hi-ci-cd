@@ -33,7 +33,7 @@
 
 # version: 2.1
 # orbs:
-#   hello-build: circleci/hello-build@0.0.14
+#     hello-build: circleci/hello-build@0.0.14
 # # orbs:
 # #   hello-orb:  kalmhq-ns1/hello-orb@dev:0.0.1
 # #   hello-build: circleci/hello-build@0.0.14
@@ -75,11 +75,11 @@
 #     docker: 
 #       - image: circleci/golang:1.13.11
 #     steps:
-#       - hello-build/hello-build
+#       - hello-build/hello-build:
+#           to: foobar
 
 # # Under the workflows: map, we can coordinate our two jobs, defined above.
 # workflows:
-#   version: 2
 #   myworkflow: # this is the name of our workflow
 #     jobs: # and here we list the jobs we are going to run.
 #       - one
@@ -87,12 +87,27 @@
 #       - three
 #       - job-using-orb
 
-
 orbs:
   hello-build: circleci/hello-build@0.0.14
 version: 2.1
+jobs:
+  myjob:
+    docker: 
+      - image: circleci/golang:1.13.11
+    steps:
+      - hello-build/hello-build:
+          to: "yo bro"
 workflows:
   Hello Workflow:
     jobs:
       - hello-build/hello-build:
           to: "yo bro"
+
+# orbs:
+#   hello-build: circleci/hello-build@0.0.14
+# version: 2.1
+# workflows:
+#   Hello Workflow:
+#     jobs:
+#       - hello-build/hello-build:
+#           to: "yo bro"
