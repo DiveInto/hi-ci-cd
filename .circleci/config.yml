@@ -58,6 +58,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
           command: |
             docker build -t $IMG_NAME:latest .
             IMG_ID=$(docker images $IMG_NAME -q | head -n 1)
+            echo $IMG_ID
+            echo "export IMG_ID=${IMG_ID}" >> $BASH_ENV
       - run:
           name: other step in job, check if env still persist
           command: echo $IMG_ID
