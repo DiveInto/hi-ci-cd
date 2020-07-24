@@ -55,8 +55,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
       - run:
           name: Build Docker image
           command: |
-          docker build -t $IMAGE_NAME:latest .
-          IMG_ID=$(docker images $IMAGE_NAME -q | head -n 1)
+            docker build -t $IMAGE_NAME:latest .
+            IMG_ID=$(docker images $IMAGE_NAME -q | head -n 1)
       - run2:
           name: other step in job, check if env still persist
           command: echo $IMG_ID
