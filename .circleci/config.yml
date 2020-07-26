@@ -33,6 +33,7 @@
 
 version: 2.1
 orbs:
+  deploy-orb: kalmhq-ns1/deploy-orb@dev:0.0.1
   hello-orb:  kalmhq-ns1/hello-orb@dev:0.0.1
   hello-build: circleci/hello-build@0.0.14
   test-orb:  kalmhq-ns1/test-orb@dev:0.0.1
@@ -78,6 +79,12 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
           to: foobar
       - test-orb/deploy:
           IMG: foo/bar
+      - deploy-orb/deploy:
+          KALM_API_ADDRESS: https://dashboard.kapp.live
+          KALM_DEPLOY_KEY: WRONG_DEPLOY_KEY
+          KALM_APP: kalm-system
+          KALM_COMPONENT: kalm
+          KALM_COMPONENT_IMG_TAG: latest
 
 # Under the workflows: map, we can coordinate our two jobs, defined above.
 workflows:
@@ -85,7 +92,7 @@ workflows:
     jobs: # and here we list the jobs we are going to run.
       - one
       - two
-      - three
+      #- three
       - job-using-orb
       - hello-orb/run1:
           param1: this-is-my-p1
