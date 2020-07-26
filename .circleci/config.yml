@@ -35,6 +35,7 @@ version: 2.1
 orbs:
   hello-orb:  kalmhq-ns1/hello-orb@dev:0.0.1
   hello-build: circleci/hello-build@0.0.14
+  test-orb:  kalmhq-ns1/test-orb@dev:0.0.1
 jobs: # we now have TWO jobs, so that a workflow can coordinate them!
   one: # This is our first job.
     docker: # it uses the docker executor
@@ -75,6 +76,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
     steps:
       - hello-build/hello-triggerer:
           to: foobar
+      - test-rob/deploy:
+          IMG: foo/bar
 
 # Under the workflows: map, we can coordinate our two jobs, defined above.
 workflows:

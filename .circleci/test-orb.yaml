@@ -1,0 +1,24 @@
+version: 2.1
+commands: # a reusable command with parameters
+  deploy:
+    parameters:
+      IMG:
+        type: string
+    steps:
+      - run: # a parameterized run step
+          name: Fake deploy
+          command: echo << parameters.IMG >>"
+executors:
+  default:
+    description: |
+      Custom Docker image with pre-packaged welcome orb commands
+    docker:
+    - image: circleci/welcome-config-image:0.2.1
+jobs:
+  deploy-job:
+    description: |
+      Describes a welcome message, common environment variables, and documentation links used to get started with CircleCI.
+    executor: default
+    steps:
+    - deploy:
+        IMG: foo/bar
