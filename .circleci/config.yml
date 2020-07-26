@@ -76,7 +76,7 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
     steps:
       - hello-build/hello-triggerer:
           to: foobar
-      - test-rob/deploy:
+      - test-orb/deploy:
           IMG: foo/bar
 
 # Under the workflows: map, we can coordinate our two jobs, defined above.
