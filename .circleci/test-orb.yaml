@@ -7,7 +7,7 @@ commands: # a reusable command with parameters
     steps:
       - run: # a parameterized run step
           name: Fake deploy
-          command: echo << parameters.IMG >>"
+          command: echo << parameters.IMG >>
 executors:
   default:
     description: |
