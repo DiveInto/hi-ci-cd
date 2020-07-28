@@ -1,3 +1,5 @@
+name: Flow Use My Action
+
 on: [push]
 
 jobs:
