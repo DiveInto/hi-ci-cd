@@ -1,5 +1,5 @@
 # action.yml https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action#creating-an-action-metadata-file
-name: 'Kalm Deploy'
+name: 'hi-ci-cd'
 description: 'Greet someone and record the time'
 inputs:
   who_to_greet:  # id of input
