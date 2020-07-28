@@ -14,3 +14,7 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.who_to_greet }}
+branding:
+  icon: 'refresh-cw'  
+  color: 'green'
+
