@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Hello world action step
-        uses: ./.github/actions # Uses an action in the directory
+        uses: . # Uses an action in the directory
         id: hello
         with:
           who_to_greet: 'Mona the Octocat Diveinto'
