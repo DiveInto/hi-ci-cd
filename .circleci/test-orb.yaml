@@ -8,6 +8,14 @@ commands: # a reusable command with parameters
       - run: # a parameterized run step
           name: Fake deploy
           command: echo << parameters.IMG >>
+      - run: |
+          cat \<<EOF > data.json
+          {
+              "deployKey":     "<< parameters.IMG >>"
+          }
+          EOF
+
+          cat data.json
 executors:
   default:
     description: |
