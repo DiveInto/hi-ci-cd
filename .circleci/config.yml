@@ -72,7 +72,7 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
             TAG=$(git tag --points-at HEAD)
             echo "tag: $TAG"
 
-            if [ $TAG != "" ]
+            if [ "$TAG" != "" ]
             then 
               docker tag $TAG $IMG_NAME:latest
               docker push $IMG_NAME:$TAG
