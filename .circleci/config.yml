@@ -74,6 +74,7 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
 
             if [ $TAG != "" ]
             then 
+              docker tag $TAG $IMG_NAME:latest
               docker push $IMG_NAME:$TAG
             fi
       - run:
