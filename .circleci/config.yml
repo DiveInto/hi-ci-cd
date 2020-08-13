@@ -98,7 +98,7 @@ workflows:
     jobs: # and here we list the jobs we are going to run.
       - one
       - two
-      #- three
+      - three
       - job-using-orb
       - hello-orb/run1:
           param1: this-is-my-p1
