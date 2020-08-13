@@ -68,6 +68,12 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
             IMG_ID=$(docker images $IMG_NAME -q | head -n 1)
             echo $IMG_ID
             echo "export IMG_ID=${IMG_ID}" >> $BASH_ENV
+
+            TAG=$(git tag --points-at HEAD)
+            if [ $TAG != "" ]
+            then 
+              docker push $IMG_NAME:$TAG
+            fi
       - run:
           name: other step in job, check if env still persist
           command: echo $IMG_ID
