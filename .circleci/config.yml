@@ -76,6 +76,9 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
             then 
               echo $IMG_NAME:$TAG $IMG_NAME:latest
               docker tag $IMG_NAME:$TAG $IMG_NAME:latest
+              
+              docker images
+
               docker push $IMG_NAME:$TAG
             fi
       - run:
