@@ -70,6 +70,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
             echo "export IMG_ID=${IMG_ID}" >> $BASH_ENV
 
             TAG=$(git tag --points-at HEAD)
+            echo "tag: $TAG"
+
             if [ $TAG != "" ]
             then 
               docker push $IMG_NAME:$TAG
