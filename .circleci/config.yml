@@ -75,7 +75,7 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
             if [ "$TAG" != "" ]
             then 
               echo $IMG_NAME:$TAG $IMG_NAME:latest
-              docker tag $IMG_NAME:$TAG $IMG_NAME:latest
+              docker tag $IMG_NAME:latest $IMG_NAME:$TAG
               
               docker images
 
