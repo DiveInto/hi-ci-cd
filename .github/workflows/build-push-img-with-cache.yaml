@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-dir-${{ hashFiles('dir/package.json') }}
+          key: ${{ runner.os }}-buildx-dir-${{ hashFiles('frontend/package.json') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
       -
@@ -38,6 +38,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
+          file: ./Dockerfile-npm
           tags: diveinto/hi-ci-cd:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
