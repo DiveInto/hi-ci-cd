@@ -46,7 +46,7 @@ jobs:
         run: ls -al /tmp/.buildx-cache/* && cat /tmp/.buildx-cache/index.json
       - 
         name: list dir2
-        run: pwd && ls * 
+        run: ls -al /tmp/.buildx-cache/blobs/sha256/* 
       - 
         name: list dir3
         run: ls */*
