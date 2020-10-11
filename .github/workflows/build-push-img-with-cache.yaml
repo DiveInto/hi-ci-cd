@@ -23,7 +23,7 @@ jobs:
         name: Cache Docker layers
         uses: actions/cache@v2
         with:
-          path: /tmp/.buildx-cache
+          path: ~/.npm
           key: ${{ runner.os }}-buildx-dir-${{ hashFiles('frontend/package.json') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
@@ -40,14 +40,14 @@ jobs:
           push: true
           file: ./Dockerfile-npm
           tags: diveinto/hi-ci-cd:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
-      - 
-        name: list dir
-        run: ls -al /tmp/.buildx-cache/* && cat /tmp/.buildx-cache/index.json
-      - 
-        name: list dir2
-        run: ls -al /tmp/.buildx-cache/blobs/sha256/* 
-      - 
-        name: list dir3
-        run: ls */*
+          cache-from: type=local,src=~/.npm
+          cache-to: type=local,dest=~/.npm
+      # - 
+      #   name: list dir
+      #   run: ls -al ~/.npm/* && cat ~/.npm/index.json
+      # - 
+      #   name: list dir2
+      #   run: ls -al ~/.npm/blobs/sha256/* 
+      # - 
+      #   name: list dir3
+      #   run: ls */*
