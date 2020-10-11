@@ -43,10 +43,10 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
       - 
         name: list dir
-        run: ls /tmp/.buildx-cache
+        run: ls -al /tmp/.buildx-cache && cat /tmp/.buildx-cache/index.json && cat /tmp/.buildx-cache/ingest 
       - 
         name: list dir2
-        run: ls *
+        run: pwd && ls * 
       - 
         name: list dir3
         run: ls */*
