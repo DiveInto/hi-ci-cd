@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-dir-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-buildx-dir-${{ hashFiles('dir/package.json') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
       -
