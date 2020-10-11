@@ -9,7 +9,7 @@ on:
       - build-with-cache
 
 jobs:
-  github-cache:
+  job-build-with-cache:
     runs-on: ubuntu-latest
     steps:
       -
