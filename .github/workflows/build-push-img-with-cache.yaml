@@ -40,8 +40,11 @@ jobs:
           push: true
           file: ./Dockerfile-npm
           tags: diveinto/hi-ci-cd:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=registry,ref=diveinto/hi-ci-cd:latest
+          cache-to: type=inline
+          # cache-from: type=local,src=/tmp/.buildx-cache
+          # cache-to: type=local,dest=/tmp/.buildx-cache
+
       # - 
       #   name: list dir
       #   run: ls -al /tmp/.buildx-cache/* && cat /tmp/.buildx-cache/index.json
