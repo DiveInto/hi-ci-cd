@@ -55,8 +55,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
       - run: sleep 1 # and then sleep for 15 seconds.
   build-push-img:
     docker:
-      - image: docker:stable
-      #- image: jdrouet/docker-with-buildx:stable
+      # - image: docker:stable
+      - image: jdrouet/docker-with-buildx:stable-0.4.2
     steps:
       - checkout
       - setup_remote_docker:
