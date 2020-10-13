@@ -53,37 +53,28 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
       - checkout
       - run: echo "A more familiar hi" # We run a similar echo command to above.
       - run: sleep 1 # and then sleep for 15 seconds.
-  three:
-    environment:
-      IMG_NAME: tmp-img
+  build-push-img:
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: jdrouet/docker-with-buildx:stable
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: Build Docker image
-          command: |
-            docker build -t $IMG_NAME:latest .
-            IMG_ID=$(docker images $IMG_NAME -q | head -n 1)
-            echo $IMG_ID
-            echo "export IMG_ID=${IMG_ID}" >> $BASH_ENV
-
-            TAG=$(git tag --points-at HEAD)
-            echo "tag: $TAG"
-
-            if [ "$TAG" != "" ]
-            then 
-              echo $IMG_NAME:$TAG $IMG_NAME:latest
-              docker tag $IMG_NAME:latest $IMG_NAME:$TAG
-              
-              docker images
-
-              docker push $IMG_NAME:$TAG
-            fi
+          command: >
+            #docker build -t $IMG_NAME:latest .
+            docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:latest --cache-to type=inline,mode=max
+            --load
+            -t diveinto/hi-ci-cd:latest .
       - run:
-          name: other step in job, check if env still persist
-          command: echo $IMG_ID
+          name: Publish Docker Image to DOCKER HUB
+          command: |
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+            docker push diveinto/hi-ci-cd:latest
+            docker tag diveinto/hi-ci-cd:latest diveinto/hi-ci-cd:$CIRCLE_SHA1
+            docker push diveinto/hi-ci-cd:$CIRCLE_SHA1
   job-using-orb:
     docker: 
       - image: circleci/golang:1.13.11
@@ -105,7 +96,7 @@ workflows:
     jobs: # and here we list the jobs we are going to run.
       - one
       - two
-      - three
+      - build-push-img
       - job-using-orb
       - hello-orb/run1:
           param1: this-is-my-p1
