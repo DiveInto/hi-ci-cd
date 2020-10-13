@@ -62,17 +62,24 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
           version: 19.03.13
       - run:
           name: Build Docker image
-          command: >
-            
-            docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:latest --cache-to type=inline,mode=max
-            --load
+          command: |
+            # build cache
+            docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:cache --cache-to type=inline,mode=max \
+            --load \ 
+            -t diveinto/hi-ci-cd:cache .
+
+            # build image with cache
+            docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:cache \
+            --load \
             -t diveinto/hi-ci-cd:latest .
       - run:
           name: Publish Docker Image to DOCKER HUB
           command: |
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
+            docker push diveinto/hi-ci-cd:cache
             docker push diveinto/hi-ci-cd:latest
+            
             docker tag diveinto/hi-ci-cd:latest diveinto/hi-ci-cd:$CIRCLE_SHA1
             docker push diveinto/hi-ci-cd:$CIRCLE_SHA1
   job-using-orb:
