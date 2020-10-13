@@ -1,3 +1,18 @@
+# ========= backend go
+FROM golang:1.15.2 as backend-builder
+WORKDIR /workspace/backend
+
+COPY backend/go.mod go.mod
+COPY backend/go.sum go.sum
+
+RUN go mod download
+
+# go source code
+COPY backend/ .
+
+RUN go build -ldflags "-s -w" -o echo-example .
+
+
 # ============== Frontend ==============
 FROM node:10 as frontend-builder
 WORKDIR /workspace/frontend
@@ -13,19 +28,6 @@ COPY frontend/ .
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT ["/entrypoint.sh"]
 
-# ========= backend go
-FROM golang:1.15.2 as backend-builder
-WORKDIR /workspace/backend
-
-COPY backend/go.mod go.mod
-COPY backend/go.sum go.sum
-
-RUN go mod download
-
-# go source code
-COPY backend/ .
-
-RUN go build -ldflags "-s -w" -o echo-example .
 
 # ============== Final ==============
 FROM alpine
