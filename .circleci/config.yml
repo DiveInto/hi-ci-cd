@@ -65,7 +65,7 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
           command: |
             # build cache
             docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:cache --cache-to type=inline,mode=max \
-            --load \ 
+            --load \
             -t diveinto/hi-ci-cd:cache .
 
             # build image with cache
@@ -79,7 +79,7 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
 
             docker push diveinto/hi-ci-cd:cache
             docker push diveinto/hi-ci-cd:latest
-            
+
             docker tag diveinto/hi-ci-cd:latest diveinto/hi-ci-cd:$CIRCLE_SHA1
             docker push diveinto/hi-ci-cd:$CIRCLE_SHA1
   job-using-orb:
