@@ -65,6 +65,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
       - run:
           name: Build Docker image
           command: |
+            export DOCKER_CLI_EXPERIMENTAL=enabled 
+
             # build cache
             docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:cache --cache-to type=inline,mode=max \
             --load \
