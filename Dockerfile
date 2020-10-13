@@ -12,7 +12,6 @@ COPY backend/ .
 
 RUN go build -ldflags "-s -w" -o echo-example .
 
-
 # ============== Frontend ==============
 FROM node:10 as frontend-builder
 WORKDIR /workspace/frontend

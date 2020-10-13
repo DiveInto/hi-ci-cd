@@ -65,12 +65,18 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
       - run:
           name: Build Docker image
           command: |
-            export DOCKER_CLI_EXPERIMENTAL=enabled 
+            # create a builder of docker-container driver type to make use of registry build cache exporter.
+            docker buildx create --name mybuilder --use
 
             # build cache
-            docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:cache --cache-to type=inline,mode=max \
-            --load \
-            -t diveinto/hi-ci-cd:cache .
+            #docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:cache --cache-to type=inline,mode=max \
+            
+            docker buildx build \
+            --cache-from type=registry,ref=diveinto/hi-ci-cd:cache \
+            --cache-to type=registry,ref=diveinto/hi-ci-cd:cache,mode=max \
+            --push \
+            --progress=plain \
+            -t diveinto/hi-ci-cd:latest .
 
             echo "=============="
 
@@ -83,7 +89,7 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
           command: |
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
-            docker push diveinto/hi-ci-cd:cache
+            #docker push diveinto/hi-ci-cd:cache
             docker push diveinto/hi-ci-cd:latest
 
             docker tag diveinto/hi-ci-cd:latest diveinto/hi-ci-cd:$CIRCLE_SHA1
