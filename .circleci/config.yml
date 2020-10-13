@@ -68,6 +68,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
             --load \
             -t diveinto/hi-ci-cd:cache .
 
+            echo "=============="
+
             # build image with cache
             docker buildx build --cache-from type=registry,ref=diveinto/hi-ci-cd:cache \
             --load \
@@ -101,12 +103,12 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
 workflows:
   myworkflow: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
-      - one
-      - two
+      # - one
+      # - two
       - build-push-img
-      - job-using-orb
-      - hello-orb/run1:
-          param1: this-is-my-p1
+      #- job-using-orb
+      # - hello-orb/run1:
+      #     param1: this-is-my-p1
 
 
 # orbs:
