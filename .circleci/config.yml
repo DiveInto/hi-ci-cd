@@ -2,8 +2,10 @@ version: 2.1
 
 jobs:
   build-push-img:
-    docker:
-      - image: jdrouet/docker-with-buildx:stable-0.4.2
+    machine:
+      image: ubuntu-1604:202007-01
+    # docker:
+    #   - image: jdrouet/docker-with-buildx:stable-0.4.2
     steps:
       - checkout
       - setup_remote_docker:
@@ -21,7 +23,7 @@ jobs:
             docker buildx ls
 
             docker buildx create --name mybuilder --use
-            
+
             # # docker context create
             # docker context create \
             #   --docker host=$DOCKER_HOST \
