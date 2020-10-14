@@ -49,18 +49,21 @@ jobs:
         name: build & push
         run: |
           docker buildx ls
+          echo "============================="
 
           # build cache
           docker buildx build \
             --cache-from type=local,src=/tmp/buildx-cache \
             --cache-to type=local,dest=/tmp/buildx-cache,mode=max .
-          
+          echo "============================="
+
           # build img
           docker buildx build \
               --output type=registry \
               --cache-from type=local,src=/tmp/buildx-cache \
               --push \
               -t diveinto/hi-ci-cd:latest-github-build .
+          echo "============================="
           
           ls -al /tmp/buildx-cache
       # - 
