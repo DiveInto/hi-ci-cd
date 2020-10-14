@@ -13,8 +13,13 @@ jobs:
           name: Build Docker image
           command: |
             docker context list
+            echo '==========='
+            docker context inspect default
+            echo '==========='
+            echo $DOCKER_HOST
+            echo '==========='
             docker buildx ls
-            
+
             # docker context create
 
             # create a builder of docker-container driver type to make use of registry build cache exporter.
