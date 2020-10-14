@@ -25,7 +25,7 @@ jobs:
         with:
           path: /tmp/.buildx-cache
           # key: ${{ runner.os }}-buildx-dir-${{ hashFiles('frontend/package.json') }}
-          key: ${{ runner.os }}-buildx-dir-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
       -
