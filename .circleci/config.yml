@@ -14,6 +14,8 @@ jobs:
       - run:
           name: Build Docker image
           command: |
+            DOCKER_CLI_EXPERIMENTAL=enabled
+            
             docker context list
             echo '==========='
             docker context inspect default
