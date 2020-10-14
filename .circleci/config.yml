@@ -27,6 +27,9 @@ jobs:
               --cache-from=type=registry,ref=diveinto/hi-ci-cd:cache \
               --cache-to=type=registry,ref=diveinto/hi-ci-cd:cache,mode=max \
               -t diveinto/hi-ci-cd:latest .
+            
+            echo '=========================='
+            docker images
 workflows:
   myworkflow: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
