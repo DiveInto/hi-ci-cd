@@ -64,8 +64,11 @@ jobs:
               --push \
               -t diveinto/hi-ci-cd:latest-github-build .
           echo "============================="
-          
+
           ls -al /tmp/buildx-cache
+          echo "============================="
+
+          cat /tmp/buildx-cache/index.json
       # - 
       #   name: list dir
       #   run: ls -al /tmp/.buildx-cache/* && cat /tmp/.buildx-cache/index.json
