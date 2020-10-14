@@ -27,7 +27,7 @@ jobs:
             docker context use my-ctx
 
             # create a builder of docker-container driver type to make use of registry build cache exporter.
-            docker buildx create --name mybuilder --use my-ctx
+            docker buildx create my-ctx --use
 
             # build
             docker buildx ls
