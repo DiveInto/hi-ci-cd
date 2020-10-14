@@ -14,9 +14,9 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            DOCKER_CLI_EXPERIMENTAL=enabled
-            cat ~/.docker/config.json
-            
+            export DOCKER_CLI_EXPERIMENTAL=enabled
+            #cat ~/.docker/config.json
+
             docker context list
             echo '==========='
             docker context inspect default
