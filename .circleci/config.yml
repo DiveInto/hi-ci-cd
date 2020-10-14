@@ -8,8 +8,8 @@ jobs:
     #   - image: jdrouet/docker-with-buildx:stable-0.4.2
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 19.03.13
+      # - setup_remote_docker:
+      #     version: 19.03.13
       - run: docker version
       - run:
           name: Build Docker image
