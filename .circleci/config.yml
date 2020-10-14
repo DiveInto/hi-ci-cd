@@ -15,31 +15,18 @@ jobs:
           name: Build Docker image
           command: |
             export DOCKER_CLI_EXPERIMENTAL=enabled
-            #cat ~/.docker/config.json
-
-            docker context list
-            echo '==========='
-            docker context inspect default
-            echo '==========='
-            echo $DOCKER_HOST
-            echo '==========='
-            docker buildx ls
 
             docker buildx create --name mybuilder --use
 
-            # # docker context create
-            # docker context create \
-            #   --docker host=$DOCKER_HOST \
-            #   my-ctx
-            # docker context use my-ctx
-
-            # unset $DOCKER_HOST
-
-            # # create a builder of docker-container driver type to make use of registry build cache exporter.
-            # docker buildx create my-ctx --use
-
+            # login
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            
             # build
-            docker buildx ls
+            docker buildx build \
+              --output type=registry \
+              --cache-from=type=registry,ref=diveinto/hi-ci-cd:cache \
+              --cache-to=type=registry,ref=diveinto/hi-ci-cd:cache,mode=max \
+              -t diveinto/hi-ci-cd:latest .
 workflows:
   myworkflow: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
