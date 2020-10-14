@@ -34,19 +34,35 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          file: ./Dockerfile
-          tags: diveinto/hi-ci-cd:latest-github-build
-          # cache-from: type=registry,ref=diveinto/hi-ci-cd:latest
-          # cache-to: type=inline
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
+      # -
+      #   name: Build and push
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     push: true
+      #     file: ./Dockerfile
+      #     tags: diveinto/hi-ci-cd:latest-github-build
+      #     # cache-from: type=registry,ref=diveinto/hi-ci-cd:latest
+      #     # cache-to: type=inline
+      #     cache-from: type=local,src=/tmp/.buildx-cache
+      #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
       - 
-        run: ls -al /tmp/.buildx-cache
+        name: build & push
+        run: |
+          docker buildx ls
+
+          # build cache
+          docker buildx build \
+            --cache-from type=local,src=/tmp/buildx-cache \
+            --cache-to type=local,dest=/tmp/buildx-cache,mode=max .
+          
+          # build img
+          docker buildx build \
+              --output type=registry \
+              --cache-from type=local,src=/tmp/buildx-cache \
+              --push \
+              -t diveinto/hi-ci-cd:latest-github-build .
+          
+          ls -al /tmp/.buildx-cache
       # - 
       #   name: list dir
       #   run: ls -al /tmp/.buildx-cache/* && cat /tmp/.buildx-cache/index.json
