@@ -23,7 +23,7 @@ jobs:
         name: Cache Docker layers
         uses: actions/cache@v2
         with:
-          path: /tmp/.buildx-cache
+          path: /tmp/buildx-cache
           # key: ${{ runner.os }}-buildx-dir-${{ hashFiles('frontend/package.json') }}
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
@@ -43,8 +43,8 @@ jobs:
       #     tags: diveinto/hi-ci-cd:latest-github-build
       #     # cache-from: type=registry,ref=diveinto/hi-ci-cd:latest
       #     # cache-to: type=inline
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
+      #     cache-from: type=local,src=/tmp/buildx-cache
+      #     cache-to: type=local,mode=max,dest=/tmp/buildx-cache
       - 
         name: build & push
         run: |
@@ -62,7 +62,7 @@ jobs:
               --push \
               -t diveinto/hi-ci-cd:latest-github-build .
           
-          ls -al /tmp/.buildx-cache
+          ls -al /tmp/buildx-cache
       # - 
       #   name: list dir
       #   run: ls -al /tmp/.buildx-cache/* && cat /tmp/.buildx-cache/index.json
