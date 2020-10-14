@@ -28,6 +28,11 @@ jobs:
               --cache-to=type=registry,ref=diveinto/hi-ci-cd:cache,mode=max \
               -t diveinto/hi-ci-cd:latest .
             
+            echo '========================== build again with new tag'
+            docker buildx build \
+              -t diveinto/hi-ci-cd:new-tag \
+              --load .
+            
             echo '=========================='
             docker images
 workflows:
