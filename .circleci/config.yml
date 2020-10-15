@@ -23,19 +23,20 @@ jobs:
             
             # build
             docker buildx build \
-              --output type=registry \
+              --output=type=docker \
               --cache-from=type=registry,ref=diveinto/hi-ci-cd:cache \
               --cache-to=type=registry,ref=diveinto/hi-ci-cd:cache,mode=max \
               -t diveinto/hi-ci-cd:latest .
             
             echo '=========================='
             docker images
-
-            echo '========================== build again with new tag'
-            docker buildx build \
-              -t diveinto/hi-ci-cd:new-tag \
-              --load .
             
+            echo '=========================='
+            docker tag diveinto/hi-ci-cd:latest diveinto/hi-ci-cd:$CIRCLE_SHA1
+
+            docker push diveinto/hi-ci-cd:latest
+            docker push diveinto/hi-ci-cd:$CIRCLE_SHA1
+
             echo '=========================='
             docker images
 workflows:
