@@ -44,7 +44,6 @@ jobs:
       - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: docker version
       - run:
           name: Build Docker image
           command: |
