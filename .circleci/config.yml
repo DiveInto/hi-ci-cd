@@ -45,7 +45,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: try echo env
+          name: try echo env in heredoc
           command: |
             cat \<<EOF >> k.yaml
             a
