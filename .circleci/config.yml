@@ -47,15 +47,15 @@ jobs:
       - run: docker version
       - run:
           name: Build Docker image
-          command: >
+          command: |
             cat <<EOF >> k.yml
-            apiVersion: install.kalm.dev/v1alpha1
-            kind: KalmOperatorConfig
-            metadata:
-              namespace: kalm-operator
-              name: kalmoperatorconfig-sample
-            spec:
-              kalmVersion: ${CIRCLE_SHA1}
+              apiVersion: install.kalm.dev/v1alpha1
+              kind: KalmOperatorConfig
+              metadata:
+                namespace: kalm-operator
+                name: kalmoperatorconfig-sample
+              spec:
+                kalmVersion: ${CIRCLE_SHA1}
             EOF
 
             echo "==========" 
