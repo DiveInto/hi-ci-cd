@@ -47,7 +47,7 @@ jobs:
       - run: docker version
       - run:
           name: Build Docker image
-          command: |
+          command: >
             cat <<EOF >> k.yml
             apiVersion: install.kalm.dev/v1alpha1
             kind: KalmOperatorConfig
