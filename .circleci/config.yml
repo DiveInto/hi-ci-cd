@@ -41,7 +41,7 @@ jobs:
             docker images
   echo-in-cmd:
     docker:
-      - image: jdrouet/docker-with-buildx:stable-0.4.2
+      - image: circleci/ruby:2.4.1
     steps:
       - checkout
       - run: docker version
