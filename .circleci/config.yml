@@ -47,7 +47,7 @@ jobs:
       - run:
           name: try echo env
           command: |
-            cat << EOF >> k.yaml
+            cat \<< EOF >> k.yaml
             a
             b $CIRCLE_SHA1
             EOF
