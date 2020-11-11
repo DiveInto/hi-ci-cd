@@ -52,7 +52,7 @@ jobs:
             where c1='something'
             EOF
 
-            echo "$sql"
+            echo $sql
 workflows:
   myworkflow: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
