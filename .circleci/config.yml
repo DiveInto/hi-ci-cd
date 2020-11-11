@@ -47,10 +47,12 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            cat \<< EOF
+            cat \<< EOF >> k.yaml
             a
             b
             EOF
+
+            cat k.yaml
 workflows:
   myworkflow: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
