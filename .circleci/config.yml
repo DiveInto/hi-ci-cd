@@ -48,8 +48,13 @@ jobs:
           name: try echo env in heredoc
           command: |
             cat \<<EOF >> k.yaml
-            a
-            b $CIRCLE_SHA1
+            apiVersion: install.kalm.dev/v1alpha1
+            kind: KalmOperatorConfig
+            metadata:
+              namespace: kalm-operator
+              name: kalmoperatorconfig-sample
+            spec:
+              kalmVersion: $CIRCLE_SHA1
             EOF
 
             cat k.yaml
