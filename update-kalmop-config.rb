@@ -17,4 +17,4 @@ config["spec"] ||= {}
 config["spec"][comp] ||= {}
 config["spec"][comp]["version"] = version
 
-File.open("./tmp/updated.yml", "w") { |file| file.write(config.to_yaml) }
+File.open("./tmp/updated.yaml", "w") { |file| file.write(config.to_yaml) }
