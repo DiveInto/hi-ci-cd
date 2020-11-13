@@ -78,6 +78,7 @@ jobs:
             EOF
 
             ruby update-kalmop-config.rb foo bar
+            ls tmp
             cat ./tmp/updated.yaml
 workflows:
   myworkflow: # this is the name of our workflow
