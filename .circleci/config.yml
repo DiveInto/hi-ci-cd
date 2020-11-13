@@ -58,6 +58,27 @@ jobs:
             EOF
 
             cat k.yaml
+  update-yaml-using-ruby:
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout
+      - run:
+          name: update
+          command: |
+            mkdir tmp
+            cat \<<EOF >> ./tmp/kalm-op-config.yaml
+            apiVersion: install.kalm.dev/v1alpha1
+            kind: KalmOperatorConfig
+            metadata:
+              namespace: kalm-operator
+              name: kalmoperatorconfig-sample
+            spec:
+              kalmVersion: $CIRCLE_SHA1
+            EOF
+
+            ruby update-kalmop-config.rb foo bar
+            cat ./tmp/updated.yaml
 workflows:
   myworkflow: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
@@ -65,3 +86,6 @@ workflows:
   2ndworkflow:
     jobs:
       - echo-in-cmd
+  3rdworkflow:
+    jobs:
+      - update-yaml-using-ruby
