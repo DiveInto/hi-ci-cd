@@ -17,4 +17,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: auto tag
         run: |
+          # check if current commit has a tag in format: vx.y.z
+
           ./tag.sh -v patch

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Notes: based on https://stackoverflow.com/a/27332476/404145
+#        with small modifications
+
 VERSION=""
 
 #get parameters
@@ -15,7 +18,7 @@ CURRENT_VERSION=`git describe --abbrev=0 --tags 2>/dev/null`
 
 if [[ $CURRENT_VERSION == '' ]]
 then
-  CURRENT_VERSION='1.0.0'
+  CURRENT_VERSION='v0.0.1'
 fi
 echo "Current Version: $CURRENT_VERSION"
 
@@ -24,9 +27,10 @@ echo "Current Version: $CURRENT_VERSION"
 CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./ })
 
 #get number parts
-VNUM1=${CURRENT_VERSION_PARTS[0]}
-VNUM2=${CURRENT_VERSION_PARTS[1]}
-VNUM3=${CURRENT_VERSION_PARTS[2]}
+VNUM1=${CURRENT_VERSION_PARTS[0]} | sed 's/[^0-9]*//g'
+VNUM2=${CURRENT_VERSION_PARTS[1]} | sed 's/[^0-9]*//g'
+VNUM3=${CURRENT_VERSION_PARTS[2]} | sed 's/[^0-9]*//g'
+echo "$VNUM1 $VNUM2 $VNUM3"
 
 if [[ $VERSION == 'major' ]]
 then
