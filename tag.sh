@@ -15,7 +15,7 @@ done
 
 #get highest tag number, and add default if doesn't exist
 CURRENT_VERSION=`git describe --abbrev=0 --tags 2>&1`
-echo $CURRENT_VERSION
+#echo $CURRENT_VERSION
 
 if [[ $CURRENT_VERSION == '' ]]
 then
@@ -31,7 +31,7 @@ CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./ })
 VNUM1=`echo ${CURRENT_VERSION_PARTS[0]} | sed 's/[^0-9]*//g'`
 VNUM2=`echo ${CURRENT_VERSION_PARTS[1]} | sed 's/[^0-9]*//g'`
 VNUM3=`echo ${CURRENT_VERSION_PARTS[2]} | sed 's/[^0-9]*//g'`
-echo "nums $VNUM1 $VNUM2 $VNUM3"
+#echo "nums $VNUM1 $VNUM2 $VNUM3"
 
 if [[ $VERSION == 'major' ]]
 then
