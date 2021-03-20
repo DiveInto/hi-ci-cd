@@ -27,10 +27,10 @@ echo "Current Version: $CURRENT_VERSION"
 CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./ })
 
 #get number parts
-VNUM1=${CURRENT_VERSION_PARTS[0]} | sed 's/[^0-9]*//g'
-VNUM2=${CURRENT_VERSION_PARTS[1]} | sed 's/[^0-9]*//g'
-VNUM3=${CURRENT_VERSION_PARTS[2]} | sed 's/[^0-9]*//g'
-echo "$VNUM1 $VNUM2 $VNUM3"
+VNUM1=`echo ${CURRENT_VERSION_PARTS[0]} | sed 's/[^0-9]*//g'`
+VNUM2=`echo ${CURRENT_VERSION_PARTS[1]} | sed 's/[^0-9]*//g'`
+VNUM3=`echo ${CURRENT_VERSION_PARTS[2]} | sed 's/[^0-9]*//g'`
+echo "nums $VNUM1 $VNUM2 $VNUM3"
 
 if [[ $VERSION == 'major' ]]
 then
@@ -41,6 +41,7 @@ then
 elif [[ $VERSION == 'patch' ]]
 then
   VNUM3=$((VNUM3+1))
+  VNUM3=$(printf "%03g" $VNUM3)
 else
   echo "No version type (https://semver.org/) or incorrect type specified, try: -v [major, minor, patch]"
   exit 1
@@ -49,7 +50,7 @@ fi
 
 #create new tag
 NEW_TAG="v$VNUM1.$VNUM2.$VNUM3-auto"
-echo "($VERSION) updating $CURRENT_VERSION to $NEW_TAG"
+#echo "($VERSION) updating $CURRENT_VERSION to $NEW_TAG."
 
 #get current hash and see if it already has a tag
 GIT_COMMIT=`git rev-parse HEAD`
