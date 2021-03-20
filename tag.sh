@@ -44,7 +44,7 @@ fi
 
 
 #create new tag
-NEW_TAG="$VNUM1.$VNUM2.$VNUM3"
+NEW_TAG="v$VNUM1.$VNUM2.$VNUM3-auto"
 echo "($VERSION) updating $CURRENT_VERSION to $NEW_TAG"
 
 #get current hash and see if it already has a tag
