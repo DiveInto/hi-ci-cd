@@ -13,7 +13,7 @@ do
   esac
 done
 
-#get highest tag number, and add 1.0.0 if doesn't exist
+#get highest tag number, and add default if doesn't exist
 CURRENT_VERSION=`git describe --abbrev=0 --tags 2>&1`
 echo $CURRENT_VERSION
 
