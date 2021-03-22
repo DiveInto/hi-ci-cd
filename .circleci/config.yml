@@ -100,7 +100,7 @@ workflows:
               only:
                 - master
             tags:
-              only: /^v.*
+              only: /^v.*/
   2ndworkflow:
     jobs:
       - echo-in-cmd
