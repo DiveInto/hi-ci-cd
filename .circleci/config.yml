@@ -1,15 +1,20 @@
 version: 2.1
 
 jobs:
+  auto-tag:
+    machine:
+      image: ubuntu-2004:202008-01
+    steps:
+      - checkout
+      - run:
+          name: auto tag
+          command: |
+            ./tag.sh -v patch
   build-push-img:
     machine:
       image: ubuntu-2004:202008-01
-    # docker:
-    #   - image: jdrouet/docker-with-buildx:stable-0.4.2
     steps:
       - checkout
-      # - setup_remote_docker:
-      #     version: 19.03.13
       - run: docker version
       - run:
           name: Build Docker image
@@ -90,3 +95,7 @@ workflows:
   3rdworkflow:
     jobs:
       - update-yaml-using-ruby
+  auto-tag-workflow:
+    jobs:
+      - auto-tag
+      - build-push-img
