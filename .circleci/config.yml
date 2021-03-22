@@ -110,6 +110,6 @@ workflows:
   auto-tag-workflow:
     jobs:
       - auto-tag
-      - build-push-img
+      - build-push-img:
           requires:
             - auto-tag
