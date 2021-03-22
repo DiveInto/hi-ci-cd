@@ -95,6 +95,12 @@ workflows:
   myworkflow: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
       - build-push-img
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              only: /^v.*
   2ndworkflow:
     jobs:
       - echo-in-cmd
@@ -105,3 +111,5 @@ workflows:
     jobs:
       - auto-tag
       - build-push-img
+          requires:
+            - auto-tag
