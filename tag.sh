@@ -62,7 +62,7 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 if [ -z "$NEEDS_TAG" ]; then
   #create new tag
   if [ $IS_AUTO_TAG -eq 0 ]; then
-    VNUM3=$((VNUM3+1))
+      VNUM3=$(expr $VNUM3 + 1)
   fi
 
   NEW_TAG="v$VNUM1.$VNUM2.$VNUM3-pre.$(date +"%Y%m%d%H%M")"
