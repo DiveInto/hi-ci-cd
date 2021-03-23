@@ -109,7 +109,5 @@ workflows:
       - update-yaml-using-ruby
   auto-tag-workflow:
     jobs:
+      # - some pre jobs
       - auto-tag
-      - build-push-img:
-          requires:
-            - auto-tag
