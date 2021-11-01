@@ -1,0 +1,15 @@
+name: CreateFile
+
+on:
+  schedule:
+    - cron: "* * * * *"
+
+jobs:
+  create_file:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: echo into file
+        run: |
+          echo `date` > ./create-file-`date +%s`.txt
