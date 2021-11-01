@@ -15,19 +15,30 @@ jobs:
         run: |
           echo `date` > ./create-file-`date +%s`.txt
 
-      - name: switching from HTTPS to SSH
-        run: git remote set-url origin ${{ secrets.ssh }}
-      - name: check for changes
-        run: git status
-      - name: stage changed files
-        run: git add .
-      - name: setup git identity
-        run: |
-          git config --global user.email "github-action@no-mail.com"
-          git config --global user.name "github-action"
-      - name: commit changed files
-        run: git commit -m "Auto updating TODO.txt"
+          git config --local user.email "$(git log --format='%ae' HEAD^!)"
+          git config --local user.name "$(git log --format='%an' HEAD^!)"
+          git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          git pull github ${GITHUB_REF} --ff-only
+          git add .
+          if [ -z "$(git status --porcelain)" ]; then
+            exit 0
+          fi
+          git commit -m "add a file from action"
+          git push github HEAD:${GITHUB_REF}
+
+      # - name: switching from HTTPS to SSH
+      #   run: git remote set-url origin ${{ secrets.ssh }}
+      # - name: check for changes
+      #   run: git status
+      # - name: stage changed files
+      #   run: git add .
+      # - name: setup git identity
+      #   run: |
+      #     git config --global user.email "github-action@no-mail.com"
+      #     git config --global user.name "github-action"
+      # - name: commit changed files
+      #   run: git commit -m "Auto updating TODO.txt"
       # - name: fetch from master
       #   run: git fetch origin master
-      - name: push code to master
-        run: git push origin HEAD:master
+      # - name: push code to master
+      #   run: git push origin HEAD:master
