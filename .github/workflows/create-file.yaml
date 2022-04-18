@@ -1,10 +1,6 @@
 name: CreateFile
 
-on:
-  schedule:
-    - cron: "48 3 * * *"
-
-# on: [push]
+on: [push]
 
 jobs:
   create_file:
